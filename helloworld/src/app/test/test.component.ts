@@ -73,6 +73,7 @@ export class TestComponent implements OnInit {
   public isSpecial = true
   public isError = false
   public highlight = "orange"
+  public href = ""
   public messageClasses = { //combine classes as object pass into ng.class attribute
     "success" : this.isSuccess,
     "fail" : !this.isSuccess,
