@@ -1,4 +1,6 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
+import {EmployeeService} from '../employee.service';
+
 
 @Component({
   selector: 'app-test',//attribute  //'.app-test' class selector //'app-test' html tag selector
@@ -36,6 +38,23 @@ import { Component, OnInit,Input } from '@angular/core';
     </div>
 
     <h3>{{"hello" + parentData}}</h3>
+
+    <input type = "submit" (click) = "sendMessage()">
+
+    <h3>{{num | number: '3.1-7'}}</h3>
+    <h3>{{date | date : 'short'}}</h3>
+    <h3>{{date | date : 'shortDate'}}</h3>
+
+    <h3>{{str | lowercase}}</h3>
+    <h3>{{str | titlecase}}</h3>
+    <h3>{{str | slice : 0:9}}</h3>
+
+    <ul *ngFor = "let x of employees">
+      <li>{{x.id}}{{x.name}}{{x.age}}</li>
+    </ul>
+    <p>{{service_name}}</p>
+
+
 
 
 
@@ -86,13 +105,14 @@ export class TestComponent implements OnInit {
 
   public greeting = ""
 
+  public employees = []
+  public service_name = ""
 
-
-  constructor() { }
+  constructor(private _employeeService : EmployeeService) { }
 
   ngOnInit() {
-
-
+    this.employees = this._employeeService.getEmployees()
+    this.service_name = this._employeeService.service_name
   }
   getHref(){ //function format //html like println in java
     this.href = window.location.href
@@ -117,6 +137,14 @@ export class TestComponent implements OnInit {
 
   @Input() public parentData;
 
+  @Output() public childEvent = new EventEmitter()
 
+  sendMessage(){
+    this.childEvent.emit("message from child component")
+  }
+
+  public num = 1.234
+  public str = "this is string"
+  public date = new Date()
 
 }
